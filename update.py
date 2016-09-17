@@ -29,10 +29,11 @@ def parse_tx(btc_addr, tx, usd_rate):
     time = datetime.fromtimestamp(tx['time'], tz=utc)
     amount = sum([x['value'] for x in tx['out'] if x['addr'] == btc_addr])
     usd_worth = float(usd_rate) * obj.amount / 10e7
+    sender = tx['inputs'][0]['prev_out']
 
     dbtx = Transaction.query.filter_by(hash_id=hash_id).first()
     if not dbtx:
-        dbtx = Transaction(hash_id=hash_id, block_height=block_height, time=time, amount=amount, usd_worth=usd_worth)
+        dbtx = Transaction(hash_id, sender, block_height, time, amount, usd_worth)
         db.session.add(dbtx)
         db.session.commit()
 
