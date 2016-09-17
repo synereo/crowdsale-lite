@@ -28,7 +28,7 @@ def parse_tx(btc_addr, tx, usd_rate):
 
     time = datetime.fromtimestamp(tx['time'], tz=utc)
     amount = sum([x['value'] for x in tx['out'] if x['addr'] == btc_addr])
-    usd_worth = float(usd_rate) * obj.amount / 10e7
+    usd_worth = float(usd_rate) * amount / 10e7
     sender = tx['inputs'][0]['prev_out']
 
     dbtx = Transaction.query.filter_by(hash_id=hash_id).first()
