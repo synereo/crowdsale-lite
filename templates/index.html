@@ -2,4 +2,20 @@
 
 {% block content %}
 <h1>Synereo Crowdsale Lite</h1>
+
+<table class="table table-striped">
+{% for tx in txs %}
+    <tr>
+        <td><a href="https://blockchain.info/tx/{{ tx.hash_id }}">{{ tx.hash_id }}</a></td>
+        <td>{{ tx.sender }}</td>
+        <td>{{ tx.block_height }}</td>
+        <td>{{ tx.time }}</td>
+        <td>{{ '%g' % (tx.amount / 100000000) }} BTC</td>
+        <td>${{ '%0.2f' % tx.usd_worth }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+<h2>Total USD: ${{ total_usd }}</h2>
+
 {% endblock %}

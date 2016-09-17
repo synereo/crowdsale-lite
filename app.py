@@ -33,7 +33,9 @@ class Transaction(db.Model):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    txs = Transaction.query.all()
+    total_usd = sum([tx.usd_worth for tx in txs])
+    return render_template('index.html', txs=txs, total_usd=total_usd)
 
 
 if __name__ == '__main__':
